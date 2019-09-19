@@ -1,0 +1,31 @@
+<br>
+<h1>The recipe of a <%= @cocktail.name %></h1>
+<br>
+<div class="container">
+  <div class="row">
+<% @cocktail.doses.each do |dose| %>
+    <div class="col-4">
+  <div class="d-flex flex-column mt-4">
+    <%= dose.description %> of
+    <%= dose.ingredient.name.capitalize %>
+      <%= link_to 'delete dose', dose_path(dose), method: :delete, data: {confirm: 'are you sure?'}, class: 'btn btn-danger'  %>
+    </div>
+    </div>
+<% end %>
+  </div>
+</div>
+
+<br>
+<!-- Now i can add a dose directly in the show page of the cocktail -->
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <h4>Add a dose for my <%= @cocktail.name %></h4>
+      <%= simple_form_for([@cocktail,@dose]) do |f| %>
+      <%= f.input :description %>
+      <%= f.association :ingredient, collection: Ingredient.all %>
+      <%= f.submit class: 'btn btn-primary'%>
+    </div>
+  <% end %>
+  </div>
+</div>
